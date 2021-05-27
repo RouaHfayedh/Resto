@@ -1,0 +1,33 @@
+{
+  "name": "restos",
+  "version": "1.0.0",
+  "description": "project for booking table ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "resto",
+    "book",
+    "booking",
+    "table"
+  ],
+  "author": "roua safa",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^3.3.4",
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.6",
+    "ember-cli-moment-shim": "^3.8.0",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.2",
+    "http": "0.0.1-security",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.10",
+    "path": "^0.12.7"
+  }
+}
