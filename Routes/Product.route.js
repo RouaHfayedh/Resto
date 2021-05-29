@@ -1,17 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
-const Command=require('../Models/Command.model');
+const Product=require('../Models/Product.model');
 
 //for json
 var jsonParser = bodyParser.json();
 //for urlencoded
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-//getting all commands
-router.get('/', urlencodedParser ,async (req,res,next)=>{
+router.get('/getAll', urlencodedParser ,async (req,res,next)=>{
     try{
-        const results = await Command.find()
+        const results = await Product.find()
         res.send(results)
         //console.log(results)
     }catch(error){
@@ -20,19 +19,14 @@ router.get('/', urlencodedParser ,async (req,res,next)=>{
     //res.send('getting a list of all commands ...');
 });
 
-//add new command
-router.post('/', urlencodedParser,(req,res,next)=>{
-    console.log(req.body.date);
-    const command= new Command({
+router.post('/add', urlencodedParser,(req,res,next)=>{
+    const product= new Product({
         name: req.body.name,
-        email: req.body.email,
-        date: req.body.date,
-        time: req.body.time,
-        prefferedFood: req.body.prefferedFood,
-        occasion: req.body.occasion
+        description: req.body.description,
+        img : req.body.img,
+        price: req.body.price
     });
-    console.log(req.body.prefferedFood)
-    command.save().then((result)=>{
+    product.save().then((result)=>{
         res.send(result);
     })
     .catch(err=>{
@@ -43,20 +37,20 @@ router.post('/', urlencodedParser,(req,res,next)=>{
 router.get('/:id',jsonParser, async(req,res,next)=>{
     const id = req.params.id;
     try{
-        const command= await Command.findById(id);
-        res.send(command);
+        const product= await Product.findById(id);
+        res.send(product);
     }catch(error){
         console.log(error.message);
     }
 })
 
-router.patch('/:id',urlencodedParser ,async (req,res,next)=>{
+router.patch('/update/:id',urlencodedParser ,async (req,res,next)=>{
     
     try{
         const id=req.params.id
         const updates = req.body
         const options = {new: true};
-        const result = await Command.findByIdAndUpdate(id, updates, options);
+        const result = await Product.findByIdAndUpdate(id, updates, options);
         res.send(result);
 
     }catch(error){
@@ -64,10 +58,10 @@ router.patch('/:id',urlencodedParser ,async (req,res,next)=>{
     }
 })
 
-router.delete('/:id',urlencodedParser,async (req,res,next)=>{
+router.delete('/delete/:id',urlencodedParser,async (req,res,next)=>{
     const id= req.params.id
     try{
-        const result = await Command.findByIdAndDelete(id);
+        const result = await Product.findByIdAndDelete(id);
         res.send(result);
     }catch(error){
         console.log(error.message);

@@ -3,6 +3,7 @@ const mongoose= require("mongoose");
 const connectDB=require("./DB/Connection");
 const bodyParser = require('body-parser');
 const cmdRouter=require('./Routes/Command.route');
+const routerP=require('./Routes/Product.route.js');
 
 
 const app=express();
@@ -20,6 +21,8 @@ app.all('/test',jsonParser,(req,res)=>{
     res.send(req.body);
 })
 app.use('/Commands',cmdRouter);
+
+app.use('/products',routerP);
 
 app.post('/testing',jsonParser,(req,res)=>{
     if(req.body != undefined){
