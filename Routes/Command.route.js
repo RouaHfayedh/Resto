@@ -8,21 +8,27 @@ var jsonParser = bodyParser.json();
 //for urlencoded
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
+router.get('/', (req, res) => {
+    res.send('From API route command')
+  })
+
 //getting all commands
-router.get('/', urlencodedParser ,async (req,res,next)=>{
+router.get('/list', urlencodedParser ,async (req,res,next)=>{
+    console.log("result")
+
     try{
         const results = await Command.find()
         res.send(results)
-        //console.log(results)
+        console.log("result",results)
     }catch(error){
-        console.log(error.message);
+        console.log("error",error.message);
     }
     //res.send('getting a list of all commands ...');
 });
 
 //add new command
-router.post('/', urlencodedParser,(req,res,next)=>{
-    console.log(req.body.date);
+router.post('/add', urlencodedParser,(req,res,next)=>{
+    console.log('hello',req.body);
     const command= new Command({
         name: req.body.name,
         email: req.body.email,
@@ -33,6 +39,7 @@ router.post('/', urlencodedParser,(req,res,next)=>{
     });
     console.log(req.body.prefferedFood)
     command.save().then((result)=>{
+        console.log("hi");
         res.send(result);
     })
     .catch(err=>{
@@ -64,8 +71,8 @@ router.patch('/:id',urlencodedParser ,async (req,res,next)=>{
     }
 })
 
-router.delete('/:id',urlencodedParser,async (req,res,next)=>{
-    const id= req.params.id
+router.delete('/remove',urlencodedParser,async (req,res,next)=>{
+    const id= req.query.id
     try{
         const result = await Command.findByIdAndDelete(id);
         res.send(result);

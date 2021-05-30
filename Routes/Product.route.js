@@ -8,7 +8,7 @@ var jsonParser = bodyParser.json();
 //for urlencoded
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-router.get('/getAll', urlencodedParser ,async (req,res,next)=>{
+router.get('/list', urlencodedParser ,async (req,res,next)=>{
     try{
         const results = await Product.find()
         res.send(results)
