@@ -1,25 +1,24 @@
 var express = require("express");
 var app = express();
 var  path=require("path");
+const cors = require('cors')
 const connectDB=require("./DB/Connection");
+const commandApi=require("./Routes/Command.route");
+const productApi=require("./Routes/Product.route");
+
+const bodyParser = require('body-parser')
 
 
-
-app.use(express.json());
-app.use(express.urlencoded({extended : false}))
-app.set('views', path.join(__dirname,'views'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-
-app.use(express.static('public'));
-app.use(express.static('js'));
-app.use(express.static('css'));
-app.use(express.static('images'));
+app.use(bodyParser.json())
+app.use(cors())
+app.use('/command', commandApi)
+app.use('/product', productApi)
+connectDB();
 
 
 app.get('/', function (req, res) {
-    res.render('index');
- })
+    res.send('hello from server')
+})
 
  app.listen(8000, function () {
     console.log("Running in 8000 !")
